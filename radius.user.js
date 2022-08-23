@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Autenticação para o Made
 // @namespace    http://tampermonkey.net/
-// @version      0.1
-// @description  try to take over the world!
-// @author       You
+// @version      0.2
+// @description  link to radius
+// @author       jonatasJS
 // @match        https://sim.tins.com.br/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=tins.com.br
 // @grant        none
