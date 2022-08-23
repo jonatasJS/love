@@ -7,6 +7,7 @@
 // @match        https://sim.tins.com.br/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=tins.com.br
 // @grant        none
+// @license      MIT
 // ==/UserScript==
 
 (function () {
