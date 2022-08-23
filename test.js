@@ -9,41 +9,56 @@
 // @grant        none
 // ==/UserScript==
 
-(function() {
-    'use strict';
+(function () {
+  "use strict";
 
-        const time = setInterval(() => {
-        const pathname = window.location.pathname;
-        const pathnameNumbers = pathname.replace(/\D/gim, '');
-        const pathnameFormated = pathname.replace(`${pathnameNumbers}/`, '');
+  const start = () => {
+    const pathname = window.location.pathname;
+    const pathnameNumbers = pathname.replace(/\D/gim, "");
+    const pathnameFormated = pathname.replace(`${pathnameNumbers}/`, "");
 
-        if (pathnameFormated == "/ti/contratos/" || pathnameFormated == "/ti/dashboard/") addUrl();
-        else console.warn('Page:', 'Pagina não nescessaria!')
-    }, 500);
+    if (
+      pathnameFormated == "/ti/contratos/" ||
+      pathnameFormated == "/ti/dashboard/"
+    )
+      addUrl();
+    else console.warn("Page:", "Pagina não nescessaria!");
+  };
 
-    function addUrl() {
-        const usersName = document.querySelectorAll('[title="Nome de Usuário"]');
+  let time = setInterval(start, 500);
 
-        if(usersName.length > 0) {
-            clearInterval(time);
-            const timeBtnRoload = setInterval(() => {
-                const reloadBtn = document.querySelectorAll('button[data-grid-ref="#grid_usuarios"][class="btn btn-success btn-trans"]')
+  function addUrl() {
+    const usersName = document.querySelectorAll('[title="Nome de Usuário"]');
 
-                if(reloadBtn) {
-                    reloadBtn.forEach(e => {
-                        e.addEventListener('click', () => setTimeout(addUrl, 500));
-                    });
+    if (usersName.length > 0) {
+      clearInterval(time);
+      const timeBtnRoload = setInterval(() => {
+        const reloadBtn = document.querySelectorAll(
+          'button[data-grid-ref="#grid_usuarios"][class="btn btn-success btn-trans"]'
+        );
+        const closeBtn = document.querySelector(
+          'button[data-dismiss="modal"][class="btn btn-default"]'
+        );
 
-                    return clearInterval(timeBtnRoload);
-                }
-            },500);
-            usersName.forEach(e => {
-                const value = e.children[0].innerText;
+        if (reloadBtn) {
+          reloadBtn.forEach((e) => {
+            e.addEventListener("click", () => setTimeout(addUrl, 500));
+          });
 
-                e.innerHTML = `<a target="_blank" href="https://mgrconn.siminternet.com.br/dash_cliente.php?item=${value}">${value}</a>`;
+          if (closeBtn) {
+            closeBtn.addEventListener("click", () => {
+              time = setInterval(start, 500);
             });
+          }
+          return clearInterval(timeBtnRoload);
         }
-        console.warn("Users Name:", "Não encontrado!")
-    }
+      }, 500);
+      usersName.forEach((e) => {
+        const value = e.children[0].innerText;
 
+        e.innerHTML = `<a target="_blank" href="https://mgrconn.siminternet.com.br/dash_cliente.php?item=${value}">${value}</a>`;
+      });
+    }
+    console.warn("Users Name:", "Não encontrado!");
+  }
 })();
